@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Runtime.Serialization.Formatters;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
 
-    [SerializeField] float speedMove;
-    [SerializeField] float speedStrafe;
+    [SerializeField] float forceMove;
+    [SerializeField] float forceStrafe;
+
+    [SerializeField] int forceGrav;
+    [SerializeField] int forceJump;
+
+    private float forceDrag;
+    private float forceAngularDrag;
+
+    private Rigidbody PlayerBody;
+    private bool playerJumpEnabled;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayerBody = GetComponent<Rigidbody>();
         PhysicsValues();
     }
 
@@ -20,26 +34,50 @@ public class Player : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        // print(playerJumpEnabled);
     }
 
     void PhysicsValues()
     {
-        speedMove = 2000;
-        speedStrafe = 2000;
-        Physics.gravity = new UnityEngine.Vector3 (0,-500,0);
+        forceMove = 100;
+        forceStrafe = 100;
+        forceJump = 100;
+        forceDrag = 0.5f;
+        forceAngularDrag = 0.5f;
+        // forceGrav = 0;
+        // Physics.gravity = new UnityEngine.Vector3 (0,forceGrav,0);
     }
 
     void MovePlayer()
     {
-        // float playerForwardBack = Input.GetAxis("Vertical") * Time.deltaTime * speedMove;
-        // transform.Translate(0, 0, playerForwardBack);
-        // float playerTurn = Input.GetAxis("Horizontal") * Time.deltaTime * speedTurn;
-        // transform.Rotate(0, playerTurn, 0);
-        // float playerStrafe = Input.GetAxis("Horizontal") * Time.deltaTime * speedStrafe;
-        // transform.Translate(playerStrafe, 0, 0);
+        UnityEngine.Vector3 movement = UnityEngine.Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * new UnityEngine.Vector3(Input.GetAxis("Horizontal") * forceStrafe * Time.deltaTime, 0, Input.GetAxis("Vertical") * forceMove * Time.deltaTime);
+        PlayerBody.AddForce(movement, ForceMode.Force);
 
-        var Player = GetComponent<Rigidbody>();
-        UnityEngine.Vector3 movement = UnityEngine.Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0) * new UnityEngine.Vector3(Input.GetAxis("Horizontal") * speedStrafe * Time.deltaTime, 0, Input.GetAxis("Vertical") * speedMove * Time.deltaTime);
-        Player.velocity = movement;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Space Key Pressed");
+            if (playerJumpEnabled)
+            {
+                PlayerBody.AddForce(UnityEngine.Vector3.up * forceJump, ForceMode.Force);
+            }
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Panel_FloorSticky"))
+        {
+            playerJumpEnabled = false;
+        }
+        else if (collision.gameObject.CompareTag("Panel_FloorSlippy"))
+        {
+            PlayerBody.drag = 0.01f;
+            PlayerBody.angularDrag = 0.01f;
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        playerJumpEnabled = true;
+        PlayerBody.drag = forceDrag;
+        PlayerBody.angularDrag = forceAngularDrag;
     }
 }
