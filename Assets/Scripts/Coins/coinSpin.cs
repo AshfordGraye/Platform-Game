@@ -8,28 +8,29 @@ using UnityEngine.UIElements;
 public class coinSpin : MonoBehaviour
 {
     bool coinCollected = false;
-    int forceSpin;
-
+    float coinLifted = 0;
+    int coinTurn;
     void spinStandard()
     {
-        forceSpin = 100;
-        float forceSpinSpeed = forceSpin * Time.deltaTime;
-        transform.Rotate(0, 0, forceSpinSpeed);
+        coinTurn = 100;
+        float coinTurnSpeed = coinTurn * Time.deltaTime;
+        transform.Rotate(0, 0, coinTurnSpeed);
     }
     void spinCollected()
     {
-        forceSpin = 300;
-        float forceSpinSpeed = forceSpin * Time.deltaTime;
-        transform.Rotate(0, 0, forceSpinSpeed);
-    }
-
-    void Update()
-    {
-        while (!coinCollected){
-        spinStandard();
+        if (coinLifted < 5)
+        {
+            coinLifted += 0.01f;
+            coinTurn = 2000;
+            float coinTurnSpeed = coinTurn * Time.deltaTime;
+            transform.Rotate(0, 0, coinTurnSpeed);
+            var forceLift = 2 * Time.deltaTime;
+            transform.Translate(0, 0, -forceLift);
+        }
+        else{
+            DestroyCoin();
         }
     }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -41,18 +42,40 @@ public class coinSpin : MonoBehaviour
                 Debug.Log(Player.scoreCurrent);
                 spinCollected();
             }
+            if (gameObject.CompareTag("Coin_Silver"))
+            {
+                coinCollected = true;
+                Player.scoreCurrent += 10;
+                Debug.Log(Player.scoreCurrent);
+                spinCollected();
+            }
+            if (gameObject.CompareTag("Coin_Gold"))
+            {
+                coinCollected = true;
+                Player.scoreCurrent += 20;
+                Debug.Log(Player.scoreCurrent);
+                spinCollected();
+            }
         }
-
     }
 
-
-
-
+    void DestroyCoin(){
+        Destroy(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
-
     }
-
     // Update is called once per frame
+    void Update()
+    {
+        if (!coinCollected)
+        {
+            spinStandard();
+        }
+        else
+        {
+            spinCollected();
+        }
+    }
 }

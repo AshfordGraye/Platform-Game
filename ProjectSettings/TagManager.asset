@@ -7,6 +7,9 @@ TagManager:
   - Panel_Floor
   - Panel_Sticky
   - Panel_Slippy
+  - Coin_Bronze
+  - Coin_Silver
+  - Coin_Gold
   layers:
   - Default
   - TransparentFX
