@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Panel_AntiGrav
   - Panel_Floor
+  - Panel_Sticky
+  - Panel_Slippy
   layers:
   - Default
   - TransparentFX
