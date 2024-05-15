@@ -13,7 +13,5 @@ public class surfaceSticky : MonoBehaviour
         }
     }
 
-    void OnCollisionExit (Collision collision){
-        Player.playerJumpEnabled=true;
-    }
+    // NO COLLISION EXIT REQUIRED - PLAYER MUST MAKE CONTACT WITH ANOTHER VALID SURFACE PANEL TO RE-ENABLE JUMP
 }

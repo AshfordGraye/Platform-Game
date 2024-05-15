@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] int forceGrav;
     [SerializeField] int forceJump;
 
+    [SerializeField] UnityEngine.Vector3 movement;
+
 
     public static Rigidbody PlayerBody;
     public static bool playerJumpEnabled;

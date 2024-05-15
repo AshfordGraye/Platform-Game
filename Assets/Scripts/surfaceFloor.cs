@@ -8,12 +8,14 @@ public class surfaceFloor : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            // Enable jump if moving from a sticky surface
             Player.playerJumpEnabled = true;
         }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        Player.playerJumpEnabled = false;
+        // To avoid being able to jump in midair. Next valid surface panel contacted by player will decide if jump is re-enabled
+        Player.playerJumpEnabled = false; 
     }
 }
