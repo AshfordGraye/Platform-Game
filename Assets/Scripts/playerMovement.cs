@@ -16,11 +16,11 @@ public class Player : MonoBehaviour
     [SerializeField] int forceGrav;
     [SerializeField] int forceJump;
 
-    private float forceDrag;
-    private float forceAngularDrag;
 
-    private Rigidbody PlayerBody;
-    private bool playerJumpEnabled;
+    public static Rigidbody PlayerBody;
+    public static bool playerJumpEnabled;
+    public static float baseforceDrag = 0.5f;
+    public static float baseforceAngularDrag = 0.5f;
 
 
     // Start is called before the first frame update
@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         MovePlayer();
-        // print(playerJumpEnabled);
     }
 
     void PhysicsValues()
@@ -42,10 +41,6 @@ public class Player : MonoBehaviour
         forceMove = 100;
         forceStrafe = 100;
         forceJump = 100;
-        forceDrag = 0.5f;
-        forceAngularDrag = 0.5f;
-        // forceGrav = 0;
-        // Physics.gravity = new UnityEngine.Vector3 (0,forceGrav,0);
     }
 
     void MovePlayer()
@@ -61,23 +56,5 @@ public class Player : MonoBehaviour
                 PlayerBody.AddForce(UnityEngine.Vector3.up * forceJump, ForceMode.Force);
             }
         }
-    }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Panel_FloorSticky"))
-        {
-            playerJumpEnabled = false;
-        }
-        else if (collision.gameObject.CompareTag("Panel_FloorSlippy"))
-        {
-            PlayerBody.drag = 0.01f;
-            PlayerBody.angularDrag = 0.01f;
-        }
-    }
-    void OnCollisionExit(Collision collision)
-    {
-        playerJumpEnabled = true;
-        PlayerBody.drag = forceDrag;
-        PlayerBody.angularDrag = forceAngularDrag;
     }
 }
