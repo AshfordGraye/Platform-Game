@@ -4,12 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Panel_Floor
-  - Panel_Sticky
-  - Panel_Slippy
   - Coin_Bronze
   - Coin_Silver
   - Coin_Gold
+  - Floor_Jump
+  - Floor_Sand_Jump
+  - Floor_Rubber_Jump
+  - Floor_Fast_Jump
+  - Scenery_Jump
+  - Floor_Finish
   layers:
   - Default
   - TransparentFX

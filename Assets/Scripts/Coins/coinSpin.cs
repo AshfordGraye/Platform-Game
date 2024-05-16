@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using Unity.VisualScripting.Dependencies.Sqlite;
+// using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -20,7 +20,7 @@ public class coinSpin : MonoBehaviour
     {
         if (coinLifted < 5)
         {
-            coinLifted += 0.01f;
+            coinLifted += 0.02f;
             coinTurn = 2000;
             float coinTurnSpeed = coinTurn * Time.deltaTime;
             transform.Rotate(0, 0, coinTurnSpeed);

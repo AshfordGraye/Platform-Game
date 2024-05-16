@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
-using UnityEditor;
+// using UnityEditor;
 using UnityEngine;
 
 public class surfaceSticky : MonoBehaviour

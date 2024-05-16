@@ -4,7 +4,7 @@ using System.Numerics;
 using System.Runtime.Serialization.Formatters;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
-using UnityEditor.Callbacks;
+// using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -31,14 +31,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag.Contains("Floor"))
+        if (collision.gameObject.tag.Contains("Jump"))
         {
             Player.playerJumpEnabled = true;
+            Debug.Log(collision.gameObject.tag);
         }
     }
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag.Contains("Floor"))
+        if (collision.gameObject.tag.Contains("Jump"))
         {
             Player.playerJumpEnabled = false;
         }
