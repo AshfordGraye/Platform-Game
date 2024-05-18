@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     public static Rigidbody PlayerBody;
     public static bool playerJumpEnabled;
     
-    // BASE VALUES FOR PLAYER PHYSICS
+    // BASE VALUES FOR PLAYER
     public static float baseforceMove = 100;
     public static int baseforceJump = 100;
     public static float baseforceDrag = 1f;
@@ -23,9 +23,7 @@ public class Player : MonoBehaviour
     public static float forceMove;
     public static int forceJump;
     
-    // PLAYER SCORE VALUES
-    public static int scoreCurrent;
-    public static int scoreFinal;
+
     
     // Start is called before the first frame update
     void Start()
@@ -39,4 +37,6 @@ public class Player : MonoBehaviour
     {
         PlayerMovement.MovePlayer();
     }
+
+
 }
