@@ -22,14 +22,18 @@ public class Player : MonoBehaviour
     //  PLAYER PHYSICS VALUES TO BE USED DURING PLAY. 
     public static float forceMove;
     public static int forceJump;
+
+    public static bool playerInContact; 
     
     // PLAYER SCORE VALUES
     public static int scoreCurrent;
     public static int scoreFinal;
+    public static int playerLives;
     
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
         PlayerBody = GetComponent<Rigidbody>();
         PlayerMovement.PhysicsValues();
     }

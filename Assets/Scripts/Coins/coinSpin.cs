@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-// using Unity.VisualScripting.Dependencies.Sqlite;
+
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class coinSpin : MonoBehaviour
 {
+    public ScoreSystem playerScore;
+    private MeshCollider coinCollider;
     bool coinCollected = false;
     float coinLifted = 0;
     int coinTurn;
@@ -31,31 +33,33 @@ public class coinSpin : MonoBehaviour
             DestroyCoin();
         }
     }
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            coinCollider.enabled = false;
             if (gameObject.CompareTag("Coin_Bronze"))
             {
                 coinCollected = true;
-                Player.scoreCurrent += 5;
+                playerScore.scoreCurrent += 5;
                 Debug.Log(Player.scoreCurrent);
                 spinCollected();
             }
-            if (gameObject.CompareTag("Coin_Silver"))
+            else if (gameObject.CompareTag("Coin_Silver"))
             {
                 coinCollected = true;
-                Player.scoreCurrent += 10;
+                playerScore.scoreCurrent += 10;
                 Debug.Log(Player.scoreCurrent);
                 spinCollected();
             }
-            if (gameObject.CompareTag("Coin_Gold"))
+            else if (gameObject.CompareTag("Coin_Gold"))
             {
                 coinCollected = true;
-                Player.scoreCurrent += 20;
+                playerScore.scoreCurrent += 20;
                 Debug.Log(Player.scoreCurrent);
                 spinCollected();
             }
+            playerScore.UpdateScoreText();
         }
     }
 
@@ -65,6 +69,7 @@ public class coinSpin : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        coinCollider = GetComponent<MeshCollider>();
     }
     // Update is called once per frame
     void Update()

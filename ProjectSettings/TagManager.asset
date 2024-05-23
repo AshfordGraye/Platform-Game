@@ -13,6 +13,9 @@ TagManager:
   - Floor_Fast_Jump
   - Scenery_Jump
   - Floor_Finish
+  - Diff_Easy
+  - Diff_Medium
+  - Diff_Hard
   layers:
   - Default
   - TransparentFX

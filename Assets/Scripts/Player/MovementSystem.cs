@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Runtime.Serialization.Formatters;
+using System.Threading;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+
 // using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
 
+    int countdownTimer;
+    public LifeSystem lifeSystem;
+    public Player player;
     public static void PhysicsValues()
     {
         // AT GAME START, SET VALUES TO DEFAULTS DETERMINED BY DIFFICULTY 
@@ -31,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
+        countdownTimer = 0;
+        Player.playerInContact = true;
         if (collision.gameObject.tag.Contains("Jump"))
         {
             Player.playerJumpEnabled = true;
@@ -39,9 +47,35 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnCollisionExit(Collision collision)
     {
+        Player.playerInContact = false;
         if (collision.gameObject.tag.Contains("Jump"))
         {
             Player.playerJumpEnabled = false;
+        }
+        PlayerFallCountdown();
+    }
+    void PlayerFallCountdown()
+    {
+        
+        if (Player.playerInContact == false)
+        {
+            if (countdownTimer != 5)
+            {
+                countdownTimer += 1;
+                Debug.Log(countdownTimer);
+                Invoke("PlayerFallCountdown", 1);
+            }
+            else if (countdownTimer == 5){
+                Debug.Log("YA DIED SON");
+                Player.playerLives -=1;
+                Debug.Log(Player.playerLives);
+                if (Player.playerLives == 0){
+                    SceneManager.LoadScene("MenuGameOver");
+                }
+                else {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
+            }
         }
     }
 }
