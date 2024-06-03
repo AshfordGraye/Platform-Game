@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class surfaceBouncy : MonoBehaviour
 {
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Player.forceJump = Player.forceJump * 2;
+            Player.forceJump = 200;
         }
     }
     void OnCollisionExit(Collision collision)

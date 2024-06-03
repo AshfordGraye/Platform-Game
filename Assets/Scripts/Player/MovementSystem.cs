@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
         // AT GAME START, SET VALUES TO DEFAULTS DETERMINED BY DIFFICULTY 
         Player.forceMove = Player.baseforceMove;
         Player.forceJump = Player.baseforceJump;
+        Player.PlayerBody.drag = Player.baseforceDrag;
+        Player.PlayerBody.angularDrag = Player.baseforceAngularDrag;
     }
     public static void MovePlayer()
     {
@@ -35,20 +37,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-    void OnCollisionEnter(Collision collision)
+    void OnCollisionStay(Collision collision)
     {
         countdownTimer = 0;
         Player.playerInContact = true;
-        if (collision.gameObject.tag.Contains("Jump"))
+        if (collision.gameObject.tag.Contains("Floor"))
         {
             Player.playerJumpEnabled = true;
-            Debug.Log(collision.gameObject.tag);
         }
     }
     void OnCollisionExit(Collision collision)
     {
         Player.playerInContact = false;
-        if (collision.gameObject.tag.Contains("Jump"))
+        if (collision.gameObject.tag.Contains("Floor"))
         {
             Player.playerJumpEnabled = false;
         }

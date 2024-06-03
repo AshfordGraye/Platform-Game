@@ -4,18 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Coin_Bronze
-  - Coin_Silver
-  - Coin_Gold
-  - Floor_Jump
-  - Floor_Sand_Jump
-  - Floor_Rubber_Jump
-  - Floor_Fast_Jump
-  - Scenery_Jump
-  - Floor_Finish
   - Diff_Easy
   - Diff_Medium
   - Diff_Hard
+  - Floor
+  - Atom_Low
+  - Atom_Mid
+  - Atom_High
   layers:
   - Default
   - TransparentFX

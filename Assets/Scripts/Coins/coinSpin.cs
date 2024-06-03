@@ -10,26 +10,30 @@ public class coinSpin : MonoBehaviour
     public ScoreSystem playerScore;
     private MeshCollider coinCollider;
     bool coinCollected = false;
-    float coinLifted = 0;
+    float collectionAnimation = 0;
     int coinTurn;
     void spinStandard()
     {
         coinTurn = 100;
         float coinTurnSpeed = coinTurn * Time.deltaTime;
-        transform.Rotate(0, 0, coinTurnSpeed);
+        transform.Rotate(0, coinTurnSpeed, 0);
     }
     void spinCollected()
     {
-        if (coinLifted < 5)
+        var fromScale = transform.root.localScale;
+        Vector3 toScale = Vector3.zero;
+        if (collectionAnimation < 1)
         {
-            coinLifted += 0.02f;
+            collectionAnimation += 0.02f;
             coinTurn = 2000;
             float coinTurnSpeed = coinTurn * Time.deltaTime;
-            transform.Rotate(0, 0, coinTurnSpeed);
-            var forceLift = 2 * Time.deltaTime;
-            transform.Translate(0, 0, -forceLift);
+            transform.Rotate(0, coinTurnSpeed, 0);
+
+
+            transform.localScale = Vector3.Scale(transform.localScale,new Vector3(0.1f,0.1f,0.1f));
         }
-        else{
+        else
+        {
             DestroyCoin();
         }
     }
@@ -63,7 +67,8 @@ public class coinSpin : MonoBehaviour
         }
     }
 
-    void DestroyCoin(){
+    void DestroyCoin()
+    {
         Destroy(gameObject);
     }
     // Start is called before the first frame update
