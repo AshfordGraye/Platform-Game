@@ -36,6 +36,7 @@ public class Atoms : MonoBehaviour
     }
     void spinCollected()
     {
+        Debug.Log("" + gameObject.transform.localPosition.y);
         float atomSpinSpeed = atomSpinForce * 20 * Time.deltaTime;
         transform.Rotate(0, atomSpinSpeed, 0);
         transform.Translate(0, 0, 3 * Time.deltaTime);
